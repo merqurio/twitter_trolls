@@ -1,14 +1,17 @@
-import pymongo
-import tweepy
 import json
+import tweepy
 import logging
+import pymongo
 from time import sleep
 from keys import AUTHS
 from threading import Thread
 from transactions import data_user
+from logging.config import fileConfig
+from pymongo.errors import DuplicateKeyError
 
-logging.config.fileConfig('logging_config.ini', disable_existing_loggers=False)
+fileConfig('logging_config.ini', disable_existing_loggers=False)
 
+# setup mongo
 conn = pymongo.MongoClient()
 db = conn["twitter_trolls"]
 users = db["users"]
@@ -23,7 +26,12 @@ class HandlerListener(tweepy.StreamListener):
         try:
             json_data = json.loads(status)
             user = json_data["user"]["screen_name"]
-            handlers.update_one({"user": user}, {"user": user, "collected": False}, upsert=True)
+            try:
+                handlers.insert_one({"_id": user, "collected": False})
+
+            except DuplicateKeyError:
+                logging.info("User {} already exists".format(user))
+                pass
 
         except KeyError:
             sleep(360)
@@ -59,8 +67,8 @@ class TwitterThread(Thread):
             handler = handlers.find_one({"collected": False})
 
             try:
-                users.insert_one(data_user(handler["user"], self.api))
-                handlers.update_one({"name": handler["name"]},
+                users.insert_one(data_user(handler["_id"], self.api))
+                handlers.update_one({"name": handler["_id"]},
                                     {"$set": {"collected": True}})
 
             except Exception as e:
