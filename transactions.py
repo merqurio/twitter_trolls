@@ -9,10 +9,6 @@ def limit_handled(cursor):
     :param cursor: A cursor to iterate
     :type cursor: tweepy.Cursor
     """
-    """
-    :param cursor:
-    :return:
-    """
     while True:
         try:
             yield cursor.next()
