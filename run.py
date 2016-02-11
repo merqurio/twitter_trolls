@@ -27,7 +27,7 @@ class HandlerListener(tweepy.StreamListener):
             json_data = json.loads(status)
             user = json_data["user"]["screen_name"]
             try:
-                screen_names.insert_one({"_id": user, "collected": False})
+                screen_names.insert_one({"_id": user, "collected": False, "completed": False})
 
             except DuplicateKeyError:
                 logging.info("User {} already exists".format(user))
@@ -65,14 +65,16 @@ class TwitterThread(Thread):
         while screen_names.count() > users.count():
 
             s_name = screen_names.find_one({"collected": False})
+            screen_names.update_one({"name": s_name["_id"]},
+                                    {"$set": {"collected": True}})
 
             try:
                 users.insert_one(data_user(s_name["_id"], self.api))
                 screen_names.update_one({"name": s_name["_id"]},
-                                        {"$set": {"collected": True}})
+                                        {"$set": {"completed": True}})
 
             except Exception as e:
-                logging.error("Could not store user {}, ther Exceception was {}".format(s_name["user"], e))
+                logging.error("Could not store user {}, their Exceception was {}".format(s_name["user"], e))
 
 
 for auth in AUTHS:
