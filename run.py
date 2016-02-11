@@ -15,7 +15,7 @@ fileConfig('logging_config.ini', disable_existing_loggers=False)
 conn = pymongo.MongoClient()
 db = conn["twitter_trolls"]
 users = db["users"]
-handlers = db["screen_names"]
+screen_names = db["screen_names"]
 
 
 class HandlerListener(tweepy.StreamListener):
@@ -27,7 +27,7 @@ class HandlerListener(tweepy.StreamListener):
             json_data = json.loads(status)
             user = json_data["user"]["screen_name"]
             try:
-                handlers.insert_one({"_id": user, "collected": False})
+                screen_names.insert_one({"_id": user, "collected": False})
 
             except DuplicateKeyError:
                 logging.info("User {} already exists".format(user))
@@ -62,17 +62,17 @@ class TwitterThread(Thread):
         self.api = api
 
     def run(self):
-        while handlers.count() > users.count():
+        while screen_names.count() > users.count():
 
-            handler = handlers.find_one({"collected": False})
+            s_name = screen_names.find_one({"collected": False})
 
             try:
-                users.insert_one(data_user(handler["_id"], self.api))
-                handlers.update_one({"name": handler["_id"]},
-                                    {"$set": {"collected": True}})
+                users.insert_one(data_user(s_name["_id"], self.api))
+                screen_names.update_one({"name": s_name["_id"]},
+                                        {"$set": {"collected": True}})
 
             except Exception as e:
-                logging.error("Could not store user {}, ther Exceception was {}".format(handler["user"], e))
+                logging.error("Could not store user {}, ther Exceception was {}".format(s_name["user"], e))
 
 
 for auth in AUTHS:
