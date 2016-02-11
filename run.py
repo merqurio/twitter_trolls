@@ -4,6 +4,7 @@ from transactions import data_user
 from keys import AUTHS
 from threading import Thread
 
+# TODO: create handlers list IMPORTANT
 
 conn = pymongo.MongoClient()
 db = conn['twitter_trolls']
