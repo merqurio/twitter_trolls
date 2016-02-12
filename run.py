@@ -30,7 +30,7 @@ class HandlerListener(tweepy.StreamListener):
                 screen_names.insert_one({"_id": user, "collected": False, "completed": False})
 
             except DuplicateKeyError:
-                logging.info("User {} already exists".format(user))
+                logging.error("User {} already exists".format(user))
                 pass
 
         except KeyError:
@@ -56,6 +56,8 @@ class TwitterThread(Thread):
     """
     Creates a thread with a unique api Access,
     to make all the request under that account
+    :param api: The credentials that the thread should use
+    :type api: tweepy.API
     """
     def __init__(self, api):
         Thread.__init__(self)
