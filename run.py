@@ -30,12 +30,12 @@ class HandlerListener(tweepy.StreamListener):
                 screen_names.insert_one({"_id": user, "collected": False, "completed": False})
 
             except DuplicateKeyError:
-                logging.error("User {} already exists".format(user))
+                logging.info("User {} already exists.".format(user))
                 pass
 
         except KeyError:
-            sleep(360)
-            logging.error("Users not stored")
+            sleep(1000)
+            logging.error("Users not stored.")
 
     def on_error(self, status):
         logging.error(status)
@@ -66,17 +66,17 @@ class TwitterThread(Thread):
     def run(self):
         while screen_names.count() > users.count():
 
-            s_name = screen_names.find_one({"collected": False})
-            screen_names.update_one({"name": s_name["_id"]},
-                                    {"$set": {"collected": True}})
+            s_name = screen_names.find_one_and_update({"collected": False},
+                                                      {"$set": {"collected": True}})
+            logging.info("User {} in thread {}.".format(s_name["_id"], self.getName()))
 
             try:
                 users.insert_one(data_user(s_name["_id"], self.api))
-                screen_names.update_one({"name": s_name["_id"]},
+                screen_names.update_one({"_id": s_name["_id"]},
                                         {"$set": {"completed": True}})
 
             except Exception as e:
-                logging.error("Could not store user {}, their Exceception was {}".format(s_name["user"], e))
+                logging.error("Could not store user {}, the Exceception was {}.".format(s_name["user"], e))
 
 
 for auth in AUTHS:
