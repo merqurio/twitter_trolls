@@ -77,7 +77,7 @@ class TwitterThread(Thread):
                                         {"$set": {"completed": True}})
 
             except TweepError as e:
-                if TweepError.message[0].get("code", False) == 429:
+                if TweepError.api_code == 429:
                     logging.error("Ups, Arrived to API limit. Exception: {}".format(e))
                 else:
                     logging.error("Twitters server didn't liked something. Exception: {}".format(e))
