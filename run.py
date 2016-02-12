@@ -3,10 +3,11 @@ import tweepy
 import logging
 import pymongo
 from time import sleep
-from keys import AUTHS
+from keys import AUTHS, STREAM
 from threading import Thread
 from transactions import data_user
 from logging.config import fileConfig
+from tweepy.error import TweepError
 from pymongo.errors import DuplicateKeyError
 
 fileConfig('logging_config.ini', disable_existing_loggers=False)
@@ -42,8 +43,8 @@ class HandlerListener(tweepy.StreamListener):
 
 
 # Auth for stream
-authorization = tweepy.OAuthHandler(AUTHS[0]["consumer_key"], AUTHS[0]["consumer_secret"])
-authorization.set_access_token(AUTHS[0]["access_key"], AUTHS[0]["access_secret"])
+authorization = tweepy.OAuthHandler(STREAM["consumer_key"], STREAM["consumer_secret"])
+authorization.set_access_token(STREAM["access_key"], STREAM["access_secret"])
 
 # Start stream in a separate thread
 twitterStream = tweepy.Stream(authorization, HandlerListener())
@@ -74,6 +75,12 @@ class TwitterThread(Thread):
                 users.insert_one(data_user(s_name["_id"], self.api))
                 screen_names.update_one({"_id": s_name["_id"]},
                                         {"$set": {"completed": True}})
+
+            except TweepError as e:
+                if TweepError.message[0].get("code", False) == 429:
+                    logging.error("Ups, Arrived to API limit. Exception: {}".format(e))
+                else:
+                    logging.error("Twitters server didn't liked something. Exception: {}".format(e))
 
             except Exception as e:
                 logging.error("Could not store user {}, the Exceception was {}.".format(s_name["user"], e))
