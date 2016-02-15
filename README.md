@@ -10,8 +10,8 @@ We divide the trolls in the next categories:
 - Quantitative:
     - *Bots*
     - *Spammer*
-    
-    
+
+
 
 ## 1. Getting the data.
 
@@ -22,14 +22,14 @@ The users are randomly picked using the Twitters Stream API, all over USA and fi
 
 ## 3. Creating a model
 
-## 4. Creating a webApp 
+## 4. Creating a webApp
 
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Alex Fernandez Piqué, Albert Trias Creus, Eduard Ribas Fernández, Gabriel de Maeztu Pontevia
+Copyright (c) 2016 Alejandro Fernández Piqué, Albert Trias Creus, Eduard Ribas Fernández, Gabriel de Maeztu Pontevia
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

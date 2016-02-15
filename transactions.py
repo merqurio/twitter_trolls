@@ -48,7 +48,7 @@ def data_user(handler, api):
              "mentions": [],
              "followers": []}
 
-    for tweet in limit_handled(tweepy.Cursor(api.user_timeline, screen_name=handler).items()):
+    for tweet in limit_handled(tweepy.Cursor(api.user_timeline, screen_name=handler).items(200)):
         model["tweets"].append(tweet._json)
 
     for follower in limit_handled(tweepy.Cursor(api.followers, screen_name=handler).items()):
