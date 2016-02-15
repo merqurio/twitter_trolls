@@ -4,12 +4,12 @@ Final project for Data Science Postgrade in the University of Barcelona. The mai
 
 We divide the trolls in the next categories:
 
-    - Qualitative:
-        - *Drama Queen*
-        - *Haters*
-    - Quantitative:
-        - *Bots*
-        - *Spammer*
+- Qualitative:
+    - *Drama Queen*
+    - *Haters*
+- Quantitative:
+    - *Bots*
+    - *Spammer*
     
     
 
