@@ -1,6 +1,16 @@
 # Twitter Troll Project
 
-Final project for Data Science Postgrade in the University of Barcelona. The main goal is to create a model where we detect if a twitter user is a Troll or not, understanding by troll a person who sows discord on the Internet by starting arguments or upsetting people, by posting inflammatory, extraneous, or off-topic messages in an online community (such as a newsgroup, forum, chat room, or blog) with the deliberate intent of provoking readers into an emotional response or of otherwise disrupting normal on-topic discussion, often for their own amusement.
+Final project for Data Science Postgrade in the University of Barcelona. The main goal is to create a model where we detect if a twitter user is a Troll or not, understanding by troll a person who sows discord on the Internet by starting arguments or upsetting people, by posting inflammatory, extraneous, or off-topic messages in an online community (such as a newsgroup, forum, chat room, or blog) with the deliberate intent of provoking readers into an emotional response or of otherwise disrupting normal on-topic discussion, often for their own amusement or interest.
+
+We divide the trolls in the next categories:
+    - Qualitative:
+        - *Drama Queen*
+        - *Haters*
+    - Quantitative:
+        - *Bots*
+        - *Spammer*
+    
+    
 
 ## 1. Getting the data.
 
