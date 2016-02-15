@@ -43,14 +43,14 @@ class HandlerListener(tweepy.StreamListener):
 
 
 # Auth for stream
-# authorization = tweepy.OAuthHandler(STREAM["consumer_key"], STREAM["consumer_secret"])
-# authorization.set_access_token(STREAM["access_key"], STREAM["access_secret"])
+authorization = tweepy.OAuthHandler(STREAM["consumer_key"], STREAM["consumer_secret"])
+authorization.set_access_token(STREAM["access_key"], STREAM["access_secret"])
 
 # Start stream in a separate thread
-# twitterStream = tweepy.Stream(authorization, HandlerListener())
-# twitterStream.filter(locations=[-129.19921875, 23.1832796706,
-#                                 -70.48828125, 50.3296890942],
-#                      async=True)
+twitterStream = tweepy.Stream(authorization, HandlerListener())
+twitterStream.filter(locations=[-129.19921875, 23.1832796706,
+                                -70.48828125, 50.3296890942],
+                     async=True)
 
 
 class TwitterThread(Thread):
