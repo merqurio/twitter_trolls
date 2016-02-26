@@ -19,6 +19,11 @@ users = db["users"]
 screen_names = db["screen_names"]
 
 
+"""
+We create a stream listener to take random users from de twitter API. All Based in the USA.
+"""
+
+
 class HandlerListener(tweepy.StreamListener):
     """
     Collects user screen names and stores them in th DB
@@ -53,6 +58,11 @@ twitterStream.filter(locations=[-129.19921875, 23.1832796706,
                      async=True)
 
 
+"""
+We get the users and all the info from the random users we got from the stream
+"""
+
+
 class TwitterThread(Thread):
     """
     Creates a thread with a unique api Access,
@@ -83,6 +93,7 @@ class TwitterThread(Thread):
             except Exception as e:
                 logging.error("Could not store user {}, the Exceception was {}.".format(s_name["user"], e))
 
+# Create a new process for each twitter authorization
 
 for auth in AUTHS:
 

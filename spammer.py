@@ -5,7 +5,6 @@ from nltk.stem.porter import PorterStemmer
 from collections import Counter
 
 
-
 def tweet_stemming(tweet, token_freqs):
     """
     Stems tweets words and counts diversty
@@ -21,19 +20,19 @@ def tweet_stemming(tweet, token_freqs):
     """
     
     pattern_url = '((https?:\/\/)|www\.)([\da-z\.-]+)\.([\/\w \.-]*)( |$)'
-    regexPunctuation = re.compile('[%s]' % re.escape(string.punctuation))
+    regex_punctuation = re.compile('[%s]' % re.escape(string.punctuation))
     porter = PorterStemmer()
 
     counter_tokens = 0
-    tweet_URLremoved = re.sub(pattern_url, '', tweet, flags=re.MULTILINE) # remove URL
-    tweet_URLremoved_tokenized = word_tokenize(tweet_URLremoved) # tokenize tweet
-    tweet_URLremoved_tokenized_cleaned_stemming = [] # cleaned of URLs and hashs, and stemming
+    tweet_url_removed = re.sub(pattern_url, '', tweet, flags=re.MULTILINE) # remove URL
+    tweet_url_removed_tokenized = word_tokenize(tweet_url_removed) # tokenize tweet
+    tweet_url_removed_tokenized_cleaned_stemming = [] # cleaned of URLs and hashs, and stemming
 
-    for token in tweet_URLremoved_tokenized:
-        new_token = regexPunctuation.sub(u'', token) # remove punctuation and hash
+    for token in tweet_url_removed_tokenized:
+        new_token = regex_punctuation.sub(u'', token) # remove punctuation and hash
         if not new_token == u'':
             new_token_stemming = porter.stem(new_token)
-            tweet_URLremoved_tokenized_cleaned_stemming.append(new_token_stemming)
+            tweet_url_removed_tokenized_cleaned_stemming.append(new_token_stemming)
             token_freqs[new_token_stemming] += 1
             counter_tokens += 1
     
@@ -72,14 +71,14 @@ def tweet_iteration_stemming(user):
     :rtype: float
     """
     
-    tweets = user['tweets']
+    tweets = user["tweets"]
     token_freqs = Counter()
     counter_tokens = 0
     
     for tweet in tweets:
         counter_tokens += tweet_stemming(tweet['text'], token_freqs)
         
-    if( counter_tokens == 0 ):
+    if counter_tokens == 0:
         return -1
     else:
         token_diversity_ratio = float(len(token_freqs))/counter_tokens

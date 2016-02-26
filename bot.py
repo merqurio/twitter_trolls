@@ -9,12 +9,12 @@ def list_tweets(json):
         tweet_time.append(parser.parse(tweet["created_at"]))
         if tweet["in_reply_to_status_id"]:
             answer += 1
-    return tweet_time, float(answer*100)/len(tweet_time)
+    return tweet_time, answer*100.0/len(tweet_time)
 
 
 def distance_tweets(tweet_time):
     distance_tweet_time = []
-    for x in range(1,len(tweet_time),1):
+    for x in range(1, len(tweet_time),1):
         distance = (tweet_time[x-1]-tweet_time[x]).total_seconds()
         distance_tweet_time.append(distance)
     return distance_tweet_time
@@ -23,11 +23,12 @@ def distance_tweets(tweet_time):
 def periodicity_answer(json):
     """ Gives the percentage of tweets that are answers of another tweet and a parameter that gives a relation
     of the periodicity of them.
+
     :param json: the twitter @username data
     :type json: dict
+
     .:return: periodicity (1 periodic, 0 random), percentage of answers
     :rtype: float, float
-
     """
     tweet_time, answer = list_tweets(json)
     distance_tweet_time = distance_tweets(tweet_time)
