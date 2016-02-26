@@ -63,6 +63,7 @@ def tweet_iteration_stemming(user):
     """
     For a given user, returns its ratio of tweets language diversity,
     between 0 and 1 (0: low diversity, 1: high diversity)
+    or -1 if no word is used in tweets
     
     :param user: json of the user
     :type user: json
@@ -78,9 +79,11 @@ def tweet_iteration_stemming(user):
     for tweet in tweets:
         counter_tokens += tweet_stemming(tweet['text'], token_freqs)
         
-    token_diversity_ratio = float(len(token_freqs))/counter_tokens
-    
-    return token_diversity_ratio
+    if( counter_tokens == 0 ):
+        return -1
+    else:
+        token_diversity_ratio = float(len(token_freqs))/counter_tokens
+        return token_diversity_ratio
 
 
 def tweet_iteration_hashtags(user):
