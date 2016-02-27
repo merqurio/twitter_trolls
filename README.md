@@ -12,17 +12,65 @@ We divide the trolls in the next categories:
     - *Spammer*
 
 
-
 ## 1. Getting the data.
 
-With a dictionary of twitter API Token in `keys.py` we create a Python thread for each Token keys that requests all the data from a list of users.
+With a dictionary of twitter API Tokens in a `keys.py` file we create a Python thread for each Token key that requests all the data from a list of users.
 The users are randomly picked using the Twitters Stream API, all over USA and filtering to the ones written in English.
+
+`python3 populate_db.pt &` was run during 2 whole days.
 
 ## 2. Analyzing the Data.
 
-## 3. Creating a model
+In order to create an easier to analyze table we processed all the data obtained and stored in the MongoDB and we processed it and stored it in a SQL table. That way It's easier to go over.
 
-## 4. Creating a webApp
+Added variables:
+
+#### Parameters
+- number_of_tweets
+- account_old
+- language
+    - sistema
+    - tweets
+- Mentions
+    - Done by user
+    - Done to user
+    - Answers
+- Followers
+    - account_old
+    - language
+- total hashtags
+- tweets with hashtag
+- Tweets
+    - time
+    - geo
+    - number of hashtags
+    - number of likes
+    - number of retweets
+    - answers
+​
+​
+#### Parametros en C2
+- original content / retweet
+- Links / tweet
+- `int` mentions
+- own language / followers
+- own language / followees
+- Tweets / day
+- period of tweet
+- number followers with less than 30 followers
+- account_old
+- trending_topic hashtags
+- likes tweets in tweets with mentions
+- answers per tweet
+- strange hours ?
+- Verified followers
+- Followers / followees
+​
+
+
+## 3. Creating a model.
+
+## 4. Creating a webApp.
 
 
 ## License
