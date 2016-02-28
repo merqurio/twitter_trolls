@@ -14,8 +14,12 @@ def drama_queen(json):
         num_char += len(re.findall(r'\S', text))
         num_omg += len(re.findall(r' OMG |Oh My God|OH MY GOD|oh my god| omg |o m g|O M G', text))
 
-    signs_per_char = float(num_signs) / float(num_char)*100
-    capitals_per_char = float(num_capitals) / float(num_char)*100
+    if num_char == 0:
+        signs_per_char = 0
+        capitals_per_char = 0
+    else:
+        signs_per_char = float(num_signs) / float(num_char)*100
+        capitals_per_char = float(num_capitals) / float(num_char)*100
 
     if float(json["days_account"]) == 0:
         activity = 0
