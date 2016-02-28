@@ -20,7 +20,7 @@ def drama_queen(json):
     if float(json["days_account"]) == 0:
         activity = 0
     else:
-        activity = len(json["tweets"]) / float(json["days_account"])
+        activity = len(json["user_json"]["statuses_count"]) / float(json["days_account"])
 
     hashtags_per_tweet = float(json["number_hashtags"]) / len(json["tweets"])
     mentions_per_tweet = float(json["number_mentions"]) / len(json["tweets"])
