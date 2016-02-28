@@ -45,19 +45,11 @@ def data_user(handler, api):
              "number_hashtags": 0,
              "tweet_with_mentions": 0,
              "number_mentions": 0,
-             "mentions": [],
-             "followers": []}
+             "mentions": []}
 
     for tweet in limit_handled(tweepy.Cursor(api.user_timeline, screen_name=handler).items(200)):
         model["tweets"].append(tweet._json)
 
-    for follower in limit_handled(tweepy.Cursor(api.followers, screen_name=handler).items()):
-        model["followers"].append({"user": follower.screen_name,
-                                   "followers_count": follower.followers_count,
-                                   "language": follower.lang,
-                                   "tweets_num": follower.statuses_count,
-                                   "account_age": (today - follower.created_at).days
-                                   })
     mentions = []
 
     for tweet in model["tweets"]:
