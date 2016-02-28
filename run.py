@@ -27,7 +27,6 @@ def run(user):
     diversity_hashtags = tweet_iteration_hashtags(user_data)
     diversity_tweets = tweet_iteration_stemming(user_data)
     num_stalker = stalker(user_data)
-    drama = drama_queen(user_data)
     print periodicity
     print answer
     print diversity_hashtags
