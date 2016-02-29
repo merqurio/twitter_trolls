@@ -26,9 +26,7 @@ def drama_queen(json):
     else:
         activity = json["user_json"]["statuses_count"] / float(json["days_account"])
 
-    hashtags_per_tweet = float(json["number_hashtags"]) / len(json["tweets"])
-    mentions_per_tweet = float(json["number_mentions"]) / len(json["tweets"])
-    percentage_tweet_with_mention = float(json["tweet_with_mentions"]) / len(json["tweets"])
+    percentage_tweet_with_omg = float(num_omg)/len(json["tweets"])
 
     # volem que faci servir moltes majuscules i molts signes de puntuacio
     # volem que tingui una activitat elevada
@@ -39,7 +37,4 @@ def drama_queen(json):
     return signs_per_char, \
            capitals_per_char, \
            activity, \
-           hashtags_per_tweet, \
-           mentions_per_tweet, \
-           percentage_tweet_with_mention, \
-           num_omg
+           percentage_tweet_with_omg
