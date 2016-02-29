@@ -49,7 +49,7 @@ def percentage_drama_queen(activity, percentage_tweet_with_omg, capitals_per_cha
                 )+0.5 * np.sqrt(100 * (1-percentage_tweet_with_mention_average)) + (5-hashtags_per_tweet_average)**1.5 + \
                  (5-mentions_per_tweet_average)**1.5
 
-    return float(result)/normalizer*100, result, normalizer
+    return float(result)/normalizer*100
 
 
 def percentage_bot(periodicity, answer, diversity_tweets):
@@ -62,6 +62,21 @@ def percentage_bot(periodicity, answer, diversity_tweets):
     else:
         result = repetitive_bot
     return result
+
+
+def percentage_stalker(num_stalker, who_stalker, mentions_per_tweet, percentage_tweet_with_mention):
+    famous = 0
+    if num_stalker > 50:
+        if data_user(str(who_stalker), api)["user_json"]["verified"] == "True":
+            famous = 1
+        if num_stalker > 85:
+            result = num_stalker
+        else:
+            result = (6*num_stalker+3*100*percentage_tweet_with_mention-1*100*mentions_per_tweet)/10
+    else:
+        result = 0
+
+    return result, famous
 
 
 def run(user):
@@ -84,10 +99,10 @@ def run(user):
         periodicity, answer = periodicity_answer(user_data)
         diversity_hashtags = tweet_iteration_hashtags(user_data)
         diversity_tweets = tweet_iteration_stemming(user_data)
-        num_stalker = stalker(user_data)
-        per_drama_queen , result, normalizer= percentage_drama_queen(activity, percentage_tweet_with_omg, capitals_per_char, signs_per_char,
+        num_stalker, who_stalker = stalker(user_data)
+        per_drama_queen = percentage_drama_queen(activity, percentage_tweet_with_omg, capitals_per_char, signs_per_char,
                                                  percentage_tweet_with_hashtag, percentage_tweet_with_mention,
                                                  mentions_per_tweet, hashtags_per_tweet)
         per_bot = percentage_bot(periodicity, answer, diversity_tweets)
-        print per_drama_queen, per_bot
-    return 0
+        per_stalker, famous = percentage_stalker(num_stalker, who_stalker, mentions_per_tweet, percentage_tweet_with_mention)
+        print per_drama_queen, per_bot, per_stalker
