@@ -39,15 +39,29 @@ def percentage_drama_queen(activity, percentage_tweet_with_omg, capitals_per_cha
     hashtags_per_tweet -= hashtags_per_tweet_average
     if hashtags_per_tweet > 5:
         hashtags_per_tweet = 5
-    result = max(activity, 1)**1.15 * (12 * max(np.exp(percentage_tweet_with_omg)-1, 0) + np.sqrt(max(capitals_per_char, 0))
-            + 2 * np.sqrt(max(signs_per_char, 0))+0.5 * np.sqrt(100 * max(percentage_tweet_with_hashtag, 0))+0.5 *
-            np.sqrt(100 * max(percentage_tweet_with_mention, 0)) + max(hashtags_per_tweet, 0)**1.5 + max(mentions_per_tweet, 0)**1.5)
+    result = max(activity, 1)**1.15 + 12 * max(np.exp(percentage_tweet_with_omg)-1, 0) + np.sqrt(max(capitals_per_char,
+            0)) + 2 * np.sqrt(max(signs_per_char, 0))+0.5 * np.sqrt(100 * max(percentage_tweet_with_hashtag, 0))+0.5 * \
+            np.sqrt(100 * max(percentage_tweet_with_mention, 0)) + max(hashtags_per_tweet, 0)**1.5 + \
+             max(mentions_per_tweet, 0)**1.5
 
-    normalizer = 40**1.15 * (12 * np.exp(1-percentage_tweet_with_omg_average)-1 + np.sqrt(100-capitals_per_char_average)
-            + 2 * np.sqrt(100-signs_per_char_average)+0.5 * np.sqrt(100 * (1-percentage_tweet_with_hashtag_average))+0.5 *
-            np.sqrt(100 * (1-percentage_tweet_with_mention_average)) + (5-hashtags_per_tweet_average)**1.5 + (5-mentions_per_tweet_average)**1.5)
+    normalizer = 40**1.15 + 12 * np.exp(1-percentage_tweet_with_omg_average)-1 + np.sqrt(100-capitals_per_char_average) \
+                 + 2 * np.sqrt(100-signs_per_char_average)+0.5 * np.sqrt(100 * (1-percentage_tweet_with_hashtag_average)
+                )+0.5 * np.sqrt(100 * (1-percentage_tweet_with_mention_average)) + (5-hashtags_per_tweet_average)**1.5 + \
+                 (5-mentions_per_tweet_average)**1.5
 
-    return float(result)/normalizer*100
+    return float(result)/normalizer*100, result, normalizer
+
+
+def percentage_bot(periodicity, answer, diversity_tweets):
+    if max(periodicity, answer, (1-diversity_tweets)) > 95:
+        return max(periodicity, answer, (1-diversity_tweets)*100)
+    periodic_bot = float(6*periodicity+400*(1-diversity_tweets))/10
+    repetitive_bot = float(6*answer+400*(1-diversity_tweets))/10
+    if periodic_bot > repetitive_bot:
+        result = periodic_bot
+    else:
+        result = repetitive_bot
+    return result
 
 
 def run(user):
@@ -71,8 +85,9 @@ def run(user):
         diversity_hashtags = tweet_iteration_hashtags(user_data)
         diversity_tweets = tweet_iteration_stemming(user_data)
         num_stalker = stalker(user_data)
-        per_drama_queen = percentage_drama_queen(activity, percentage_tweet_with_omg, capitals_per_char, signs_per_char,
+        per_drama_queen , result, normalizer= percentage_drama_queen(activity, percentage_tweet_with_omg, capitals_per_char, signs_per_char,
                                                  percentage_tweet_with_hashtag, percentage_tweet_with_mention,
                                                  mentions_per_tweet, hashtags_per_tweet)
-        print per_drama_queen
+        per_bot = percentage_bot(periodicity, answer, diversity_tweets)
+        print per_drama_queen, per_bot
     return 0
