@@ -1,5 +1,5 @@
 from bot import periodicity_answer
-from spammer import tweet_iteration_stemming, tweet_iteration_hashtags
+from spammer import tweet_iteration_stemming, tweet_iteration_hashtags, tweet_iteration_urls
 from transactions import data_user
 from stalker import stalker
 from keys import STREAM
@@ -50,15 +50,18 @@ def percentage_drama_queen(activity, percentage_tweet_with_omg, capitals_per_cha
 
 
 def percentage_bot(periodicity, answer, diversity_tweets):
-    if max(periodicity, answer, (1-diversity_tweets)) > 95:
-        return max(periodicity, answer, (1-diversity_tweets)*100)
-    periodic_bot = float(6*periodicity+400*(1-diversity_tweets))/10
-    repetitive_bot = float(6*answer+400*(1-diversity_tweets))/10
-    if periodic_bot > repetitive_bot:
-        result = periodic_bot
+    if diversity_tweets == -1:
+        return max(periodicity, answer)
     else:
-        result = repetitive_bot
-    return result
+        if max(periodicity, answer, (1-diversity_tweets)*100) > 95:
+            return max(periodicity, answer, (1-diversity_tweets)*100)
+        periodic_bot = float(6*periodicity+400*(1-diversity_tweets))/10
+        repetitive_bot = float(6*answer+400*(1-diversity_tweets))/10
+        if periodic_bot > repetitive_bot:
+            result = periodic_bot
+        else:
+            result = repetitive_bot
+        return result
 
 
 def percentage_stalker(num_stalker, who_stalker, mentions_per_tweet, percentage_tweet_with_mention):
@@ -73,7 +76,6 @@ def percentage_stalker(num_stalker, who_stalker, mentions_per_tweet, percentage_
             result = (6*num_stalker+3*100*percentage_tweet_with_mention-1*100*mentions_per_tweet)/8
     else:
         result = 0
-
     return result, famous
 
 
@@ -97,6 +99,7 @@ def run(user):
         periodicity, answer = periodicity_answer(user_data)
         diversity_hashtags = tweet_iteration_hashtags(user_data)  # TODO: Really needed ?
         diversity_tweets = tweet_iteration_stemming(user_data)
+        urls_percentage = tweet_iteration_urls(user_data)
         num_stalker, who_stalker = stalker(user_data)
         per_drama_queen = percentage_drama_queen(activity, percentage_tweet_with_omg, capitals_per_char, signs_per_char,
                                                  percentage_tweet_with_hashtag, percentage_tweet_with_mention,
