@@ -2,10 +2,10 @@ from dateutil import parser
 import pandas as pd
 
 
-def list_tweets(json):
+def list_tweets(user):
     tweet_time = []
     answer = 0
-    for tweet in json["tweets"]:
+    for tweet in user["tweets"]:
         tweet_time.append(parser.parse(tweet["created_at"]))
         if tweet["in_reply_to_status_id"]:
             answer += 1
@@ -20,17 +20,17 @@ def distance_tweets(tweet_time):
     return distance_tweet_time
 
 
-def periodicity_answer(json):
+def periodicity_answer(user):
     """ Gives the percentage of tweets that are answers of another tweet and a parameter that gives a relation
     of the periodicity of them.
 
-    :param json: the twitter @username data
-    :type json: dict
+    :param user: the twitter @username data
+    :type user: dict
 
     .:return: periodicity (1 periodic, 0 random), percentage of answers
     :rtype: float, float
     """
-    tweet_time, answer = list_tweets(json)
+    tweet_time, answer = list_tweets(user)
     distance_tweet_time = distance_tweets(tweet_time)
     distance_panda = pd.Series(distance_tweet_time)
     inside = 0

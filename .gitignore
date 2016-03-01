@@ -50,6 +50,7 @@ coverage.xml
 *.mo
 *.pot
 
+/test.sql
 # Logging stuff:
 *.log
 *.log.*
