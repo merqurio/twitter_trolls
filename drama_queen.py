@@ -24,7 +24,7 @@ def drama_queen(user):
         num_signs += len(re.findall(r"\!|\:|\^|\<|\?|\...", text))
         num_capitals += len(re.findall(r"[A-Z]", text))
         num_char += len(re.findall(r"\S", text))
-        num_omg += len(re.findall(r"OMG|Oh\sMy\sGod|OH\sMY\sGOD|oh\smy\sgod|omg|o\sm\sg|O\sM\sG", text))
+        num_omg += len(re.findall(r"OMG|Oh\sMy\sGod|OH\sMY\sGOD|oh\smy\sgod|omg|o\sm\sg|O\sM\sG| WTF | wtf | LOL | lol", text))
 
     if num_char == 0:
         signs_per_char = 0
