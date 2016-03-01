@@ -27,7 +27,7 @@ def periodicity_answer(user):
     :param user: the twitter @username data
     :type user: dict
 
-    .:return: periodicity (1 periodic, 0 random), percentage of answers
+    :return: periodicity (1 periodic, 0 random), percentage of answers
     :rtype: float, float
     """
     tweet_time, answer = list_tweets(user)
