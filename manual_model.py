@@ -79,6 +79,15 @@ def percentage_stalker(num_stalker, who_stalker, mentions_per_tweet, percentage_
     return result, famous
 
 
+def percentage_spammer(diversity_tweets, diversity_hashtags, urls_percentage):
+    print diversity_tweets, diversity_hashtags, urls_percentage
+    if diversity_tweets == -1:
+        return 0
+    if diversity_hashtags == -1:
+        return 90*(1-diversity_tweets)
+    return float(600*(1-diversity_tweets)+150*(1-diversity_hashtags)+2.5*urls_percentage) / 10
+
+
 def run(user):
     try:
         user_data = data_user(user, api)
@@ -106,4 +115,5 @@ def run(user):
                                                  mentions_per_tweet, hashtags_per_tweet)
         per_bot = percentage_bot(periodicity, answer, diversity_tweets)
         per_stalker, famous = percentage_stalker(num_stalker, who_stalker, mentions_per_tweet, percentage_tweet_with_mention)
-        print(per_drama_queen, per_bot, per_stalker)
+        per_spammer = percentage_spammer(diversity_tweets, diversity_hashtags, urls_percentage)
+        print(per_drama_queen, per_bot, per_stalker, per_spammer)
