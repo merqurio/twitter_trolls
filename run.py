@@ -2,14 +2,11 @@ from bot import periodicity_answer
 from spammer import tweet_iteration_stemming, tweet_iteration_hashtags
 from transactions import data_user
 from stalker import stalker
+from Keys import consumer_key, consumer_secret, access_key, access_secret
 import tweepy
 import numpy as np
 from drama_queen import drama_queen
 
-consumer_key = "iaAqgOyzLb2qbTsjOZXoZpbIB"
-consumer_secret = "QZrExTZsMeqykJpw0EogLH5uEiOqj0bJquy5rJEQhehrlCBTAY"
-access_key = "155609363-VOaTTLbdRZKkgRSnHmu30ht9pLY9VJ0ArZZOy2uD"
-access_secret = "AycYj44tusCbzLZgyW6hENvIe6kXbKujluGXw1kpsEfJ6"
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_key, access_secret)
 api = tweepy.API(auth)
