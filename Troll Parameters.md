@@ -1,29 +1,21 @@
-#### Parametros para C1
-- nº de tweets
-- account_old
-- idioma
-    - sistema
-    - tweets
-- Menciones
-    - Ratio de menciones menciones que hace
-    - Ratio de menciones que le haces
-    - Ratio de respuestas
-- Followers
-    - account_old
-    - language
-    - followera
-- hashtags totales
-- numero de tweets con hashtags
+#### Parameters for C1
+- Numbers of tweets
+- Account_old
+- Language
+    - Tweets
+- Mentions
+    - Number of mentions
+    - Number of tweets with mentions
+- Hashtags
+    - Number of hashtags
+    - Number of tweets with hashtags
 - Tweets
-    - hora
-    - geo
-    - numeros de hashtags
-    - num. de likes
-    - num de retweets
-    - answers
+    - Text 
+    - Number of answers
+    - Time
 
 
-#### Parametros en C2
+#### Parameters for C2
 - Contenido original / retweet
 - Links / tweet 
 - `int`menciones

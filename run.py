@@ -66,10 +66,11 @@ def percentage_stalker(num_stalker, who_stalker, mentions_per_tweet, percentage_
     if num_stalker > 50:
         if data_user(str(who_stalker), api)["user_json"]["verified"] == "True":
             famous = 1
+            return num_stalker, famous
         if num_stalker > 85:
             result = num_stalker
         else:
-            result = (6*num_stalker+3*100*percentage_tweet_with_mention-1*100*mentions_per_tweet)/10
+            result = (6*num_stalker+3*100*percentage_tweet_with_mention-1*100*mentions_per_tweet)/8
     else:
         result = 0
 
