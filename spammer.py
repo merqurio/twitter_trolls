@@ -1,14 +1,17 @@
 import re
 import string
+import nltk
 from nltk.tokenize import word_tokenize
 from nltk.stem.porter import PorterStemmer
 from collections import Counter
+nltk.download('punkt')
 
 
 def tweet_stemming(tweet, token_freqs):
+
     """
     Stems tweets words and counts diversty
-
+    
     :param tweet: the tweet to analyze
     :type tweet: str or unicode
 
@@ -18,31 +21,32 @@ def tweet_stemming(tweet, token_freqs):
     :returns: words added to token_freqs
     :rtype: int
     """
-
+    
     pattern_url = '((https?:\/\/)|www\.)([\da-z\.-]+)\.([\/\w \.-]*)( |$)'
     regex_punctuation = re.compile('[%s]' % re.escape(string.punctuation))
     porter = PorterStemmer()
 
     counter_tokens = 0
-    tweet_url_removed = re.sub(pattern_url, '', tweet, flags=re.MULTILINE) # remove URL
-    tweet_url_removed_tokenized = word_tokenize(tweet_url_removed) # tokenize tweet
-    tweet_url_removed_tokenized_cleaned_stemming = [] # cleaned of URLs and hashs, and stemming
+    tweet_url_removed = re.sub(pattern_url, '', tweet, flags=re.MULTILINE)  # remove URL
+    tweet_url_removed_tokenized = word_tokenize(tweet_url_removed)  # tokenize tweet
+    tweet_url_removed_tokenized_cleaned_stemming = []  # cleaned of URLs and hashs, and stemming
 
     for token in tweet_url_removed_tokenized:
-        new_token = regex_punctuation.sub(u'', token) # remove punctuation and hash
+        new_token = regex_punctuation.sub(u'', token)  # remove punctuation and hash
         if not new_token == u'':
             new_token_stemming = porter.stem(new_token)
             tweet_url_removed_tokenized_cleaned_stemming.append(new_token_stemming)
             token_freqs[new_token_stemming] += 1
             counter_tokens += 1
-
+    
     return counter_tokens
 
 
 def tweet_hashtags(hashtags, hashtag_freqs):
+
     """
     Looks for hashtags and counts diversty
-
+    
     :param hashtags: the list of hashtags to analyze
     :type hashtags: list
 
@@ -52,32 +56,33 @@ def tweet_hashtags(hashtags, hashtag_freqs):
     :returns: hashtags added to hashtag_freqs
     :rtype: int
     """
-
+    
     for hashtag in hashtags:
         hashtag_freqs[hashtag['text']] += 1
     return len(hashtags)
 
 
 def tweet_iteration_stemming(user):
+
     """
     For a given user, returns its ratio of tweets language diversity,
     between 0 and 1 (0: low diversity, 1: high diversity)
     or -1 if no word is used in tweets
-
+    
     :param user: json of the user
     :type user: json
 
     :returns: ratio of tweets language diversity
     :rtype: float
     """
-
-    tweets = user["tweets"]
+    
+    tweets = user['tweets']
     token_freqs = Counter()
     counter_tokens = 0
-
+    
     for tweet in tweets:
         counter_tokens += tweet_stemming(tweet['text'], token_freqs)
-
+        
     if counter_tokens == 0:
         return -1
     else:
@@ -86,13 +91,14 @@ def tweet_iteration_stemming(user):
 
 
 def tweet_iteration_hashtags(user):
+
     """
     For a given user, returns its ratio of hashtags diversity,
-    between 0 and 1 (0: low diversity, 1: high diversity),
+    between 0 and 1 (0: low diversity, 1: high diversity), 
     or -1 if no hashtag is used
-
+    
     :param user: json of the user
-    :type user: json
+    :type user: bson
 
     :returns: ratio of hashtags diversity
     :rtype: float
@@ -100,16 +106,16 @@ def tweet_iteration_hashtags(user):
 
     if user["tweets_with_hashtags"] <= 0:
         return -1
-
-    tweets = user['tweets']
+    
+    tweets = user["tweets"]
     hashtag_freqs = Counter()
     counter_hashtags = 0
-
+    
     for tweet in tweets:
         hashtags = tweet['entities']["hashtags"]
         if len(hashtags) > 0:
             counter_hashtags += tweet_hashtags(hashtags, hashtag_freqs)
 
     hashtag_diversity_ratio = float(len(hashtag_freqs))/counter_hashtags
-
+    
     return hashtag_diversity_ratio

@@ -14,17 +14,19 @@ def drama_queen(json):
         num_char += len(re.findall(r'\S', text))
         num_omg += len(re.findall(r' OMG |Oh My God|OH MY GOD|oh my god| omg |o m g|O M G', text))
 
-    signs_per_char = float(num_signs) / float(num_char)*100
-    capitals_per_char = float(num_capitals) / float(num_char)*100
+    if num_char == 0:
+        signs_per_char = 0
+        capitals_per_char = 0
+    else:
+        signs_per_char = float(num_signs) / float(num_char)*100
+        capitals_per_char = float(num_capitals) / float(num_char)*100
 
     if float(json["days_account"]) == 0:
         activity = 0
     else:
-        activity = float(json["user_json"]["statuses_count"]) / json["days_account"]
+        activity = json["user_json"]["statuses_count"] / float(json["days_account"])
 
-    hashtags_per_tweet = float(json["number_hashtags"]) / len(json["tweets"])
-    mentions_per_tweet = float(json["number_mentions"]) / len(json["tweets"])
-    percentage_tweet_with_mention = float(json["tweet_with_mentions"]) / len(json["tweets"])
+    percentage_tweet_with_omg = float(num_omg)/len(json["tweets"])
 
     # volem que faci servir moltes majuscules i molts signes de puntuacio
     # volem que tingui una activitat elevada
@@ -35,7 +37,4 @@ def drama_queen(json):
     return signs_per_char, \
            capitals_per_char, \
            activity, \
-           hashtags_per_tweet, \
-           mentions_per_tweet, \
-           percentage_tweet_with_mention, \
-           num_omg
+           percentage_tweet_with_omg
