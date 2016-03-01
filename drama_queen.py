@@ -31,8 +31,8 @@ def drama_queen(user):
         signs_per_char = 0
         capitals_per_char = 0
     else:
-        signs_per_char = num_signs / num_char * 100.0
-        capitals_per_char = num_capitals / num_char * 100.0
+        signs_per_char = float(num_signs) / num_char
+        capitals_per_char = float(num_capitals) / num_char
 
     if float(user["days_account"]) == 0:
         activity = 0

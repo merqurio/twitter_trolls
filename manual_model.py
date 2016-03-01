@@ -106,7 +106,7 @@ def run(user):
         percentage_tweet_with_hashtag = float(user_data["tweets_with_hashtags"]) / len(user_data["tweets"])
         signs_per_char, capitals_per_char, activity, percentage_tweet_with_omg = drama_queen(user_data)
         periodicity, answer = periodicity_answer(user_data)
-        diversity_hashtags = tweet_iteration_hashtags(user_data)  # TODO: Really needed ?
+        diversity_hashtags = tweet_iteration_hashtags(user_data)
         diversity_tweets = tweet_iteration_stemming(user_data)
         urls_percentage = tweet_iteration_urls(user_data)
         num_stalker, who_stalker = stalker(user_data)
