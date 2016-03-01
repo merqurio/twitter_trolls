@@ -21,8 +21,8 @@ def distance_tweets(tweet_time):
 
 
 def periodicity_answer(user):
-    """ Gives the percentage of tweets that are answers of another tweet and a parameter that gives a relation
-    of the periodicity of them.
+    """ Gives the percentage of tweets that are answers of another tweet.
+    Also a parameter that gives a relation of the periodicity of them.
 
     :param user: the twitter @username data
     :type user: dict
