@@ -63,7 +63,6 @@ def tweet_hashtags(hashtags, hashtag_freqs):
 
 
 def tweet_iteration_stemming(user):
-
     """
     For a given user, returns its ratio of tweets language diversity,
     between 0 and 1 (0: low diversity, 1: high diversity)
@@ -81,9 +80,10 @@ def tweet_iteration_stemming(user):
     counter_tokens = 0
     
     for tweet in tweets:
-        counter_tokens += tweet_stemming(tweet['text'], token_freqs)
+        if tweet["lang"] == "en":
+            counter_tokens += tweet_stemming(tweet['text'], token_freqs)
         
-    if counter_tokens == 0:
+    if( counter_tokens == 0 ):
         return -1
     else:
         token_diversity_ratio = float(len(token_freqs))/counter_tokens
@@ -119,3 +119,29 @@ def tweet_iteration_hashtags(user):
     hashtag_diversity_ratio = float(len(hashtag_freqs))/counter_hashtags
     
     return hashtag_diversity_ratio
+
+
+def tweet_iteration_urls(user):
+    """
+    For a given user, returns the percentage of tweets with urls
+    
+    :param user: json of the user
+    :type user: json
+
+    :returns: percentage of tweets with urls
+    :rtype: float
+    """
+    
+    tweets = user['tweets']
+    counter_tweets = 0
+    counter_urls = 0
+    
+    for tweet in tweets:
+        counter_tweets += 1
+        urls =  len(tweet["entities"]["urls"])
+        if urls != 0:
+            counter_urls += 1
+
+    urls_percentage = float(counter_urls)*100/counter_tweets
+    
+    return urls_percentage
