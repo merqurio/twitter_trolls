@@ -1,12 +1,16 @@
+import logging
+import numpy as np
+import tweepy
 from bot import periodicity_answer
 from spammer import tweet_iteration_stemming, tweet_iteration_hashtags, tweet_iteration_urls
 from transactions import data_user
 from stalker import stalker
 from keys import STREAM
 from haters import sentiment
-import tweepy
-import numpy as np
+from logging.config import fileConfig
 from drama_queen import drama_queen
+
+fileConfig('logging_config.ini', disable_existing_loggers=False)
 
 auth = tweepy.OAuthHandler(STREAM["consumer_key"], STREAM["consumer_secret"])
 auth.set_access_token(STREAM["access_key"], STREAM["access_secret"])
@@ -115,13 +119,13 @@ def troll_bot_analyzer(user):
     try:
         user_data = data_user(user, api)
     except tweepy.TweepError:
-        print("This user is protected. His  information cannot be accessed")
+        logging.error("This user is protected or does not exist. His  information cannot be accessed")
     else:
         if user_data["user_json"]["verified"]:
-            print("This user has a verified account. Therefore it is not a troll or bot")
+            logging.error("This user has a verified account. Therefore it is not a troll or bot")
             return 0
         if len(user_data["tweets"]) == 0:
-            print("There is not enough information to classify this user")
+            logging.error("There is not enough information to classify this user")
             return 0
         hashtags_per_tweet = float(user_data["number_hashtags"]) / len(user_data["tweets"])
         mentions_per_tweet = float(user_data["number_mentions"]) / len(user_data["tweets"])
@@ -142,5 +146,5 @@ def troll_bot_analyzer(user):
             per_stalker = num_stalker
         per_spammer = percentage_spammer(diversity_tweets, diversity_hashtags, urls_percentage)
         per_hater = (1 - sentiment(user_data)) * 100
-        print(per_drama_queen, per_bot, per_stalker, per_spammer, per_hater)
+        return {per_drama_queen, per_bot, per_stalker, per_spammer, per_hater}
 
