@@ -4,27 +4,19 @@ from bot import percentage_bot, periodicity_answer
 from spammer import tweet_iteration_stemming, tweet_iteration_hashtags, tweet_iteration_urls, percentage_spammer
 from transactions import data_user
 from stalker import percentage_stalker, stalker
-from keys import STREAM
 from haters import sentiment
 from logging.config import fileConfig
 from drama_queen import percentage_drama_queen, drama_queen
 
 fileConfig('logging_config.ini', disable_existing_loggers=False)
 
-auth = tweepy.OAuthHandler(STREAM["consumer_key"], STREAM["consumer_secret"])
-auth.set_access_token(STREAM["access_key"], STREAM["access_secret"])
-api = tweepy.API(auth)
 
-
-def troll_bot_analyzer(user):
+def troll_bot_analyzer(user, api):
     try:
         user_data = data_user(user, api)
     except tweepy.TweepError:
         logging.error("This user is protected or does not exist. His  information cannot be accessed")
     else:
-        #if user_data["user_json"]["verified"]:
-        #    logging.error("This user has a verified account. Therefore it is not a troll or bot")
-        #    return False
         if len(user_data["tweets"]) == 0:
             logging.error("There is not enough information to classify this user")
             return False
