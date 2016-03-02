@@ -47,4 +47,10 @@ def troll_bot_analyzer(user):
             per_stalker = num_stalker
         per_spammer = percentage_spammer(diversity_tweets, diversity_hashtags, urls_percentage)
         per_hater = (1 - sentiment(user_data)) * 100
-        return {"user_id": user, "bot": per_bot, "drama_queen": per_drama_queen, "stalker": per_stalker, "hater": per_hater, "spammer": per_spammer, "famous": famous, "non_famous": non_famous, "stalked": who_stalker}
+
+        max_value = [per_bot, per_drama_queen, per_stalker, per_hater, per_spammer]
+        index = max_value.index(max(max_value))
+        labels = ["bot", "drama_queen", "stalker", "hater", "spammer"]
+        final = labels[index]
+
+        return {"user_id": user, "bot": per_bot, "drama_queen": per_drama_queen, "stalker": per_stalker, "hater": per_hater, "spammer": per_spammer, "famous": famous, "non_famous": non_famous, "stalked": who_stalker, "final": final}
