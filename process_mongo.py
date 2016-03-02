@@ -25,7 +25,6 @@ def process_cursor(cursor):
             "account_followees": user["user_json"]["friends_count"],
             "account_geo": user["user_json"]["geo_enabled"],
             "account_location": user["user_json"]["location"],
-            "account_profile_location": user["user_json"]["profile_location"],
             "account_total_tweets": user["user_json"]["statuses_count"],
             "account_verified": user["user_json"]["verified"],
             "tweet_period": ans_period,
