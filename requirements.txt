@@ -4,3 +4,4 @@ pandas
 pymongo
 tweepy
 numpy
+connexion

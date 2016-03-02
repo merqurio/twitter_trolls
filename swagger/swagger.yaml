@@ -1,0 +1,78 @@
+swagger: '2.0'
+info:
+  title: Twitter Troll and Bot Finder
+  version: "1.0"
+  description: |
+    An API Proposal
+
+# the domain of the service
+host: api.domain.com
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /v1
+produces:
+  - application/json
+paths:
+
+  /user/{user_id}:
+    get:
+      tags:
+        - User
+      operationId: models.get_user
+      summary: Get a single user
+      parameters:
+        - $ref: '#/parameters/user_id'
+      responses:
+        200:
+          description: Return user
+          schema:
+            $ref: '#/definitions/User'
+        404:
+          description: User does not exist
+
+parameters:
+
+  user_id:
+    name: user_id
+    description: Unique Twitter username
+    in: path
+    type: string
+    required: true
+    pattern: "^[a-zA-Z0-9-\_*]+$"
+
+definitions:
+  User:
+    type: object
+    required:
+      - user_id
+    properties:
+      user_id:
+        type: "string"
+        readOnly: true
+        description: Unique user identifier
+      drama_queen:
+        type: number
+        format: float
+      bot:
+        type: number
+        format: float
+      spammer:
+        type: number
+        format: float
+      stalker:
+        type: number
+        format: float
+      hater:
+        type: number
+        format: float
+  Error:
+    properties:
+      code:
+        type: "integer"
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
