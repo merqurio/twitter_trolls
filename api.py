@@ -14,4 +14,4 @@ def get_user(user_id):
 
     u = troll_bot_analyzer(user_id, api)
 
-    return u if u else NoContent, 500
+    return u if u else (NoContent, 500)
