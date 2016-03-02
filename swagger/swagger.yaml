@@ -7,10 +7,10 @@ info:
     five different profiles: drama queen, hater, stalker, bot and spammer.
 
 # the domain of the service
-host: 188.166.145.237
+host: 188.166.145.237:8080
 # array of all schemes that your API supports
 schemes:
-  - https
+  - http
 # will be prefixed to all paths
 basePath: /v1
 produces:
