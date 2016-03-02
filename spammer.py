@@ -4,7 +4,12 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.stem.porter import PorterStemmer
 from collections import Counter
-nltk.download('punkt')
+
+# Check the corpora is installed
+try:
+    nltk.data.find('punkt')
+except LookupError:
+    nltk.download('punkt')
 
 
 def tweet_stemming(tweet, token_freqs):
