@@ -3,6 +3,7 @@ from spammer import tweet_iteration_stemming, tweet_iteration_hashtags, tweet_it
 from transactions import data_user
 from stalker import stalker
 from keys import STREAM
+from haters import sentiment
 import tweepy
 import numpy as np
 from drama_queen import drama_queen
@@ -116,7 +117,7 @@ def run(user):
     except tweepy.TweepError:
         print("This user is protected. His  information cannot be accessed")
     else:
-        if user_data["user_json"]["verified"] == "True":
+        if user_data["user_json"]["verified"]:
             print("This user has a verified account. Therefore it is not a troll or bot")
             return 0
         if len(user_data["tweets"]) == 0:
@@ -140,4 +141,6 @@ def run(user):
         if per_stalker == 0:
             per_stalker = num_stalker
         per_spammer = percentage_spammer(diversity_tweets, diversity_hashtags, urls_percentage)
-        print(per_drama_queen, per_bot, per_stalker, per_spammer)
+        per_hater = (1 - sentiment(user_data)) * 100
+        print(per_drama_queen, per_bot, per_stalker, per_spammer, per_hater)
+

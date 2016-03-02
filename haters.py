@@ -1,7 +1,14 @@
 import random
+import nltk
 from nltk import word_tokenize
 from nltk.classify import NaiveBayesClassifier
 from nltk.corpus import movie_reviews
+
+# Check the corpora is installed
+try:
+    nltk.data.find('movie_reviews')
+except LookupError:
+    nltk.download('movie_reviews')
 
 
 def word_feats(words):

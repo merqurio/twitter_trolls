@@ -9,3 +9,6 @@ behavior your not human. too periodic your timeline is. be proactive: when want 
 
 ## Spammer
 Enough is enough. This is not the browser toolbar: your tweets include too many links and the same words continuously. Check the dictionary from time to time to enrich your vocabulary. Nobody likes a spammer!
+
+## Hater
+Take a chill pill! Stop having a destructive behaviour: your tweets are full of complaints and demeaning vocabulary. Take a look around Twitter and you'll see life is way better than what you comment it to be!
