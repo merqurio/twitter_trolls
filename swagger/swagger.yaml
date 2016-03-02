@@ -58,10 +58,10 @@ definitions:
       bot:
         type: number
         format: float
-      spammer:
+      stalker:
         type: number
         format: float
-      stalker:
+      spammer:
         type: number
         format: float
       hater:
