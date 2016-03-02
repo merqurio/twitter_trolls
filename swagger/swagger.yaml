@@ -32,6 +32,8 @@ paths:
             $ref: '#/definitions/User'
         404:
           description: User does not exist
+        500:
+          description: Server error
 
 parameters:
 
@@ -41,7 +43,7 @@ parameters:
     in: path
     type: string
     required: true
-    pattern: "^[a-zA-Z0-9-\_*]+$"
+    pattern: "^[*]+$"
 
 definitions:
   User:
