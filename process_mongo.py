@@ -4,7 +4,7 @@ from drama_queen import drama_queen
 from spammer import tweet_iteration_stemming, tweet_iteration_hashtags
 from haters import sentiment
 
-sql = dataset.connect("mysql://root:62598741Ba@localhost/users")
+sql = dataset.connect("postgresql://root:abc123@localhost/users")
 table = sql["users"]
 
 
