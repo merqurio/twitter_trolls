@@ -22,9 +22,9 @@ def troll_bot_analyzer(user):
     except tweepy.TweepError:
         logging.error("This user is protected or does not exist. His  information cannot be accessed")
     else:
-        if user_data["user_json"]["verified"]:
-            logging.error("This user has a verified account. Therefore it is not a troll or bot")
-            return False
+        #if user_data["user_json"]["verified"]:
+        #    logging.error("This user has a verified account. Therefore it is not a troll or bot")
+        #    return False
         if len(user_data["tweets"]) == 0:
             logging.error("There is not enough information to classify this user")
             return False
