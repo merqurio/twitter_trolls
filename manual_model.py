@@ -24,10 +24,10 @@ def troll_bot_analyzer(user):
     else:
         if user_data["user_json"]["verified"]:
             logging.error("This user has a verified account. Therefore it is not a troll or bot")
-            return 0
+            return False
         if len(user_data["tweets"]) == 0:
             logging.error("There is not enough information to classify this user")
-            return 0
+            return False
         hashtags_per_tweet = float(user_data["number_hashtags"]) / len(user_data["tweets"])
         mentions_per_tweet = float(user_data["number_mentions"]) / len(user_data["tweets"])
         percentage_tweet_with_mention = float(user_data["tweet_with_mentions"]) / len(user_data["tweets"])
@@ -47,5 +47,5 @@ def troll_bot_analyzer(user):
             per_stalker = num_stalker
         per_spammer = percentage_spammer(diversity_tweets, diversity_hashtags, urls_percentage)
         per_hater = (1 - sentiment(user_data)) * 100
-        return {"user_id": user, "bot": per_bot, "drama_queen": per_drama_queen, "stalker": per_stalker, "hater": per_hater, "spammer": per_spammer, "famous": famous, "stalked": who_stalker }
+        return {"user_id": user, "bot": per_bot, "drama_queen": per_drama_queen, "stalker": per_stalker, "hater": per_hater, "spammer": per_spammer, "famous": famous, "stalked": who_stalker}
 

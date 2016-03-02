@@ -21,7 +21,7 @@ paths:
     get:
       tags:
         - User
-      operationId: models.get_user
+      operationId: api.get_user
       summary: Get a single user
       parameters:
         - $ref: '#/parameters/user_id'
