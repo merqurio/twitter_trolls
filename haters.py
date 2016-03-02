@@ -40,5 +40,11 @@ def is_positive(sentence):
 
 
 def sentiment(user):
-    tweets = random.sample(user["tweets"], 10)
-    return sum(map(is_positive, tweets))/10.0
+    if len(user["tweets"]) >= 10:
+        tweets = random.sample(user["tweets"], 10)
+        return sum(map(is_positive, tweets))/10.0
+    elif len(user["tweets"]) < 10:
+        tweets = random.sample(user["tweets"], len(user["tweets"]))
+        return float(sum(map(is_positive, tweets)))/len(user["tweets"])
+    else:
+        return 0
