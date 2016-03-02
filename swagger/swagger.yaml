@@ -7,7 +7,7 @@ info:
     five different profiles: drama queen, hater, stalker, bot and spammer.
 
 # the domain of the service
-host: api.domain.com
+host: 188.166.147.273:8080
 # array of all schemes that your API supports
 schemes:
   - https
