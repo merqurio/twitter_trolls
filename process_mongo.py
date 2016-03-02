@@ -39,4 +39,4 @@ def process_cursor(cursor):
             "answer_percent": ans_percent
         }
 
-        table.insert(new_user)
+        table.upsert(new_user)
