@@ -76,6 +76,9 @@ definitions:
         type: boolean
       stalked:
         type: string
+      final:
+        type: string
+
 
 
   Error:
