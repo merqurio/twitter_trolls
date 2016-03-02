@@ -3,7 +3,8 @@ info:
   title: Twitter Troll and Bot Finder
   version: "1.0"
   description: |
-    An API Proposal
+    Analysis and classification of the behavoir of Twitter users according to
+    five different profiles: drama queen, hater, stalker, bot and spammer.
 
 # the domain of the service
 host: api.domain.com
@@ -49,16 +50,13 @@ definitions:
       - user_id
     properties:
       user_id:
-        type: "string"
+        type: string
         readOnly: true
         description: Unique user identifier
-      drama_queen:
-        type: number
-        format: float
       bot:
         type: number
         format: float
-      spammer:
+      drama_queen:
         type: number
         format: float
       stalker:
@@ -67,6 +65,15 @@ definitions:
       hater:
         type: number
         format: float
+      spammer:
+        type: number
+        format: float
+      famous:
+        type: boolean
+      stalked:
+        type: string
+
+
   Error:
     properties:
       code:
