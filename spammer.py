@@ -150,3 +150,11 @@ def tweet_iteration_urls(user):
     urls_percentage = float(counter_urls)*100/counter_tweets
     
     return urls_percentage
+
+
+def percentage_spammer(diversity_tweets, diversity_hashtags, urls_percentage):
+    if diversity_tweets == -1:
+        return 0
+    if diversity_hashtags == -1:
+        return 90*(1-diversity_tweets)
+    return float(600*(1-diversity_tweets)+150*(1-diversity_hashtags)+2.5*urls_percentage) / 10

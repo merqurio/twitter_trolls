@@ -1,4 +1,5 @@
 import re
+import numpy as np
 
 
 def drama_queen(user):
@@ -42,3 +43,61 @@ def drama_queen(user):
     percentage_tweet_with_omg = float(num_omg)/len(user["tweets"])
 
     return signs_per_char, capitals_per_char, activity, percentage_tweet_with_omg
+
+
+def percentage_drama_queen(activity, percentage_tweet_with_omg, capitals_per_char, signs_per_char, percentage_tweet_with_hashtag, percentage_tweet_with_mention, mentions_per_tweet, hashtags_per_tweet):
+    activity_average = 8
+    capitals_per_char_average = 0.1113
+    signs_per_char_average = 0.03002
+    percentage_tweet_with_omg_average = 0.1196
+    percentage_tweet_with_mention_average = 0.5950
+    percentage_tweet_with_hashtag_average = 0.1758
+    mentions_per_tweet_average = 0.7953
+    hashtags_per_tweet_average = 0.3431
+    compt1 = 0
+    compt2 = 0
+
+    activity -= activity_average
+    if activity > 20:
+        activity = 20
+    capitals_per_char -= capitals_per_char_average
+    signs_per_char -= signs_per_char_average
+    percentage_tweet_with_omg -= percentage_tweet_with_omg_average
+    percentage_tweet_with_hashtag -= percentage_tweet_with_hashtag_average
+    percentage_tweet_with_mention -= percentage_tweet_with_mention_average
+    mentions_per_tweet /= mentions_per_tweet_average
+    hashtags_per_tweet /= hashtags_per_tweet_average
+
+    if mentions_per_tweet > 5:
+        mentions_per_tweet = 5
+    if hashtags_per_tweet > 5:
+        hashtags_per_tweet = 5
+    if activity > 0:
+        compt1 += 1
+    if capitals_per_char > 0:
+        compt1 += 1
+    if signs_per_char > 0:
+        compt1 += 1
+    if percentage_tweet_with_omg > 0:
+        compt1 += 1
+    if percentage_tweet_with_hashtag > 0:
+        compt2 += 1
+    if percentage_tweet_with_mention > 0:
+        compt2 += 1
+    if mentions_per_tweet > 1:
+        compt2 += 1
+    if hashtags_per_tweet > 1:
+        compt2 += 1
+    result = 1.5*max(activity, 0) + 90*max(np.exp(percentage_tweet_with_omg)-1, 0) + 100 * np.sqrt(max(capitals_per_char, 0)) + 100 * np.sqrt(max(signs_per_char, 0))+1.2 * hashtags_per_tweet**1.15+mentions_per_tweet**1.15
+    percentage = float(result)/52*100
+
+    if compt1 >= 3 and compt2 >= 2:
+        percentage *= (1+0.20*(compt1+compt2)/8)
+
+    if compt1 <= 1:
+        percentage *= (1-0.35*(8-(compt1+compt2))/8)
+
+    if percentage > 100:
+        percentage = 100
+
+    return percentage
