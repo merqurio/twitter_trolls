@@ -42,10 +42,10 @@ def troll_bot_analyzer(user):
                                                  percentage_tweet_with_hashtag, percentage_tweet_with_mention,
                                                  mentions_per_tweet, hashtags_per_tweet)
         per_bot = percentage_bot(periodicity, answer, diversity_tweets)
-        per_stalker, famous = percentage_stalker(num_stalker, who_stalker, mentions_per_tweet, percentage_tweet_with_mention, api)
+        per_stalker, famous, non_famous = percentage_stalker(num_stalker, who_stalker, mentions_per_tweet, percentage_tweet_with_mention, api)
         if per_stalker == 0:
             per_stalker = num_stalker
         per_spammer = percentage_spammer(diversity_tweets, diversity_hashtags, urls_percentage)
         per_hater = (1 - sentiment(user_data)) * 100
-        return {"user_id": user, "bot": per_bot, "drama_queen": per_drama_queen, "stalker": per_stalker, "hater": per_hater, "spammer": per_spammer, "famous": famous, "stalked": who_stalker}
+        return {"user_id": user, "bot": per_bot, "drama_queen": per_drama_queen, "stalker": per_stalker, "hater": per_hater, "spammer": per_spammer, "famous": famous, "non_famous": non_famous, "stalked": who_stalker}
 

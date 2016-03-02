@@ -70,6 +70,8 @@ definitions:
         format: float
       famous:
         type: boolean
+      non_famous:
+        type: boolean
       stalked:
         type: string
 
