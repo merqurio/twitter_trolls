@@ -40,6 +40,10 @@ def is_positive(sentence):
 
 
 def sentiment(user):
-    tweets = random.sample(user["tweets"], 5)
-    return sum(map(is_positive, tweets))/5.0
+    tweets = user["tweets"]
+    return float(sum(map(is_positive, tweets)))/len(user["tweets"])
 
+
+def sentiment_partial(user):
+    tweets = random.sample(user["tweets"], 10)
+    return sum(map(is_positive, tweets))/10.0

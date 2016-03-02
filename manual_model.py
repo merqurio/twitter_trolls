@@ -111,7 +111,7 @@ def percentage_spammer(diversity_tweets, diversity_hashtags, urls_percentage):
     return float(600*(1-diversity_tweets)+150*(1-diversity_hashtags)+2.5*urls_percentage) / 10
 
 
-def run(user):
+def troll_bot_analyzer(user):
     try:
         user_data = data_user(user, api)
     except tweepy.TweepError:
