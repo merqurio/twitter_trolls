@@ -7,9 +7,9 @@ from keys import AUTHS
 
 def get_user(user_id):
 
-    STREAM = random.choice(AUTHS)
-    auth = tweepy.OAuthHandler(STREAM["consumer_key"], STREAM["consumer_secret"])
-    auth.set_access_token(STREAM["access_key"], STREAM["access_secret"])
+    keys = random.choice(AUTHS)
+    auth = tweepy.OAuthHandler(keys["consumer_key"], keys["consumer_secret"])
+    auth.set_access_token(keys["access_key"], keys["access_secret"])
     api = tweepy.API(auth)
 
     u = troll_bot_analyzer(user_id, api)
