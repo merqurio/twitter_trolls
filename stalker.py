@@ -4,7 +4,7 @@ from transactions import data_user
 def stalker(json):
     counter = json["mentions"]
     if json["number_mentions"] == 0:
-        return 0, "zero"
+        return 0, "False"
     result = float(counter.most_common(1)[0][1]) / json["number_mentions"] * 100
     return result, counter.most_common(1)[0][0]
 
