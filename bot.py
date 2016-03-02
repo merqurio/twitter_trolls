@@ -39,3 +39,18 @@ def periodicity_answer(user):
             inside += 1
     result = float(inside)/len(distance_tweet_time)*100
     return result, answer
+
+
+def percentage_bot(periodicity, answer, diversity_tweets):
+    if diversity_tweets == -1:
+        return max(periodicity, answer)
+    else:
+        if max(periodicity, answer, (1-diversity_tweets)*100) > 95:
+            return max(periodicity, answer, (1-diversity_tweets)*100)
+        periodic_bot = float(6*periodicity+400*(1-diversity_tweets))/10
+        repetitive_bot = float(6*answer+400*(1-diversity_tweets))/10
+        if periodic_bot > repetitive_bot:
+            result = periodic_bot
+        else:
+            result = repetitive_bot
+        return result
