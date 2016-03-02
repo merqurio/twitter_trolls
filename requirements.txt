@@ -3,5 +3,4 @@ nltk
 pandas
 pymongo
 tweepy
-nltk
 numpy
