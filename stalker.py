@@ -23,4 +23,4 @@ def percentage_stalker(num_stalker, who_stalker, mentions_per_tweet, percentage_
             result = (6*num_stalker+3*100*percentage_tweet_with_mention-1*100*mentions_per_tweet)/8
     else:
         result = 0
-    return result, famous, who_stalker
+    return result, famous
